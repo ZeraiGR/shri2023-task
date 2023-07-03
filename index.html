@@ -95,7 +95,7 @@
       </li>;
     }
 
-    const TABS = React.useMemo({
+    const TABS = {
       all: {
         title: 'Все',
         items: [{
@@ -201,7 +201,7 @@
           subtitle: 'Включено'
         }]
       }
-    }, []);
+    };
 
     for (let i = 0; i < 6; ++i) {
       TABS.all.items = [].concat(TABS.all.items, TABS.all.items);
@@ -396,13 +396,15 @@
       </main>;
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('app'));
-    root.render(
-      <>
-        <Header />
-        <Main />
-      </>
-    );
+    setTimeout(() => {
+      const root = ReactDOM.createRoot(document.getElementById('app'));
+      root.render(
+        <>
+          <Header />
+          <Main />
+        </>
+      );
+    }, 0);
   </script>
 
 </body>
