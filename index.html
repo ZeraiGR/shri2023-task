@@ -180,49 +180,10 @@
 
     const TABS_KEYS = Object.keys(TABS);
 
-    function Main() {
-      const ref = React.useRef();
-      const initedRef = React.useRef(false);
-      const [activeTab, setActiveTab] = React.useState('');
-      const [hasRightScroll, setHasRightScroll] = React.useState(false);
+    console.log('React', React);
 
-      React.useEffect(() => {
-        if (!activeTab && !initedRef.current) {
-          initedRef.current = true;
-          setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
-        }
-      });
-
-      const onSelectInput = event => {
-        setActiveTab(event.target.value);
-      };
-
-      let sizes = [];
-      const onSize = size => {
-        sizes = [...sizes, size];
-      };
-
-      React.useEffect(() => {
-        const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-        const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
-
-        const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-        if (newHasRightScroll !== hasRightScroll) {
-          setHasRightScroll(newHasRightScroll);
-        }
-      });
-
-      const onArrowCLick = () => {
-        const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
-        if (scroller) {
-          scroller.scrollTo({
-            left: scroller.scrollLeft + 400,
-            behavior: 'smooth'
-          });
-        }
-      };
-
-      return <main className="main">
+    function General() {
+      return (
         <section className="section main__general">
           <h2 className="section__title section__title-header section__main-title">Главное</h2>
           <div className="hero-dashboard">
@@ -274,7 +235,11 @@
             </ul>
           </div>
         </section>
+      );
+    }
 
+    function Favorite() {
+      return (
         <section className="section main__scripts">
           <h2 className="section__title section__title-header">Избранные сценарии</h2>
 
@@ -312,7 +277,53 @@
             />
           </ul>
         </section>
+      );
+    }
 
+    function Carousel() {
+      const ref = React.useRef();
+      const initedRef = React.useRef(false);
+
+      const [activeTab, setActiveTab] = React.useState('');
+      const [hasRightScroll, setHasRightScroll] = React.useState(false);
+
+      const onSelectInput = event => {
+        setActiveTab(event.target.value);
+      };
+
+      React.useEffect(() => {
+        if (!activeTab && !initedRef.current) {
+          initedRef.current = true;
+          setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
+        }
+      });
+
+      let sizes = [];
+      const onSize = size => {
+        sizes = [...sizes, size];
+      };
+
+      React.useEffect(() => {
+        const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
+        const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
+
+        const newHasRightScroll = sumWidth > ref.current.offsetWidth;
+        if (newHasRightScroll !== hasRightScroll) {
+          setHasRightScroll(newHasRightScroll);
+        }
+      });
+
+      const onArrowCLick = () => {
+        const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
+        if (scroller) {
+          scroller.scrollTo({
+            left: scroller.scrollLeft + 400,
+            behavior: 'smooth'
+          });
+        }
+      };
+
+      return (
         <section className="section main__devices">
           <div className="section__title">
             <h2 className="section__title-header">
@@ -364,6 +375,14 @@
             }
           </div>
         </section>
+      );
+    }
+
+    function Main() {
+      return <main className="main">
+        <General />
+        <Favorite />
+        <Carousel />
       </main>;
     }
 
