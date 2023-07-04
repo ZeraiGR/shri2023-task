@@ -373,9 +373,10 @@ function Header() {
     );
   }
 
-  function Main() {
+function Main() {
   return <main className="main">
     <General />
     <Favorite />
+    <Carousel />
   </main>;
   }
